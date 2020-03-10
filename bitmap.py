@@ -57,22 +57,22 @@ class Bitmap(object):
             f.write,
             [
                 # Bitmap file header
-                bytearray([0x42, 0x4d]),                   # Header field
+                bytearray([0x42, 0x4d]),             # Header field
                 struct.pack('<I', file_size),        # File size
-                bytearray([0x00, 0x00, 0x00, 0x00]),       # Reserved/unused
-                bytearray([0x36, 0x00, 0x00, 0x00]),       # Data offset
+                bytearray([0x00, 0x00, 0x00, 0x00]), # Reserved/unused
+                bytearray([0x36, 0x00, 0x00, 0x00]), # Data offset
                 # DIB header, BITMAPINFOHEADER
-                bytearray([0x28, 0x00, 0x00, 0x00]),       # DIB header size
-                struct.pack('<I', self._width),            # Image width
-                struct.pack('<I', self._height),           # Image height
-                bytearray([0x01, 0x00]),                   # Color planes
-                bytearray([0x18, 0x00]),                   # Bits per pixel
-                bytearray([0x00, 0x00, 0x00, 0x00]),       # Compression
+                bytearray([0x28, 0x00, 0x00, 0x00]), # DIB header size
+                struct.pack('<I', self._width),      # Image width
+                struct.pack('<I', self._height),     # Image height
+                bytearray([0x01, 0x00]),             # Color planes
+                bytearray([0x18, 0x00]),             # Bits per pixel
+                bytearray([0x00, 0x00, 0x00, 0x00]), # Compression
                 struct.pack('<I', file_size - 0x36), # Pixel data size
-                bytearray([0x13, 0x0b, 0x00, 0x00]),       # Horz. resolution
-                bytearray([0x13, 0x0b, 0x00, 0x00]),       # Vert. resolution
-                bytearray([0x00, 0x00, 0x00, 0x00]),       # Number of colors
-                bytearray([0x00, 0x00, 0x00, 0x00])        # Important colors
+                bytearray([0x13, 0x0b, 0x00, 0x00]), # Horz. resolution
+                bytearray([0x13, 0x0b, 0x00, 0x00]), # Vert. resolution
+                bytearray([0x00, 0x00, 0x00, 0x00]), # Number of colors
+                bytearray([0x00, 0x00, 0x00, 0x00])  # Important colors
             ]
         )
 
