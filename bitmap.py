@@ -78,8 +78,8 @@ class Bitmap(object):
 
     def _write_pixels(self, f):
         """Write the array of pixels to the file."""
-        for y in range(self._height):
-            row = reversed([self._pixels[x][y] for x in range(self._width)])
+        for y in reversed(range(self._height)):
+            row = [self._pixels[x][y] for x in range(self._width)]
             row = [reversed(color) for color in row]
             row = list(itertools.chain.from_iterable(row))
             row.extend([0x00]*self._row_pad)
@@ -90,6 +90,7 @@ class Bitmap(object):
 if __name__ == '__main__':
     bmp = Bitmap(10, 10, fill=(0, 100, 200))
     for i in range(8):
-        bmp.pencil(i + 1, i + 1, (255, 255, 255))
+        bmp.pencil(i + 1,     1, (255, 255, 255))
+        bmp.pencil(    1, i + 1, (255, 255, 255))
         bmp.pencil(i + 1, 8 - i, (255, 255, 255))
     bmp.save('bitmap_test.bmp')
