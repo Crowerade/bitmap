@@ -1,5 +1,7 @@
 """
-Generate a .bmp file from a list of RGB tuples.
+The bitmap module provides the Bitmap class. A Bitmap object represents
+an image as a matrix of pixels. Bitmap methods allow pixels to be edited
+and the image saved.
 
 For information on file format, refer to:
     https://en.wikipedia.org/wiki/BMP_file_format
