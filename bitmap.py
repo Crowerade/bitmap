@@ -1,3 +1,4 @@
+# Orig: https://github.com/jtkirkpatrick/bitmap
 """
 The bitmap module provides the Bitmap class. A Bitmap object represents
 an image as a matrix of pixels. Bitmap methods allow pixels to be edited
@@ -21,15 +22,12 @@ class Bitmap(object):
     >>> bmp.save('test.bmp')
     """
 
-    def __init__(self, width, height, fill=(0, 0, 0)):
+    def __init__(self, width, height, fill):
         """Intialize the bitmap file."""
         self._width  = width
         self._height = height
 
-        self._pixels = [
-            [fill for _ in range(self._height)]
-            for _ in range(self._width)
-        ]
+        self._pixels = fill
 
         self._row_pad   = (self._width*3) % 4
 
@@ -66,10 +64,8 @@ class Bitmap(object):
                 bytearray([0x36, 0x00, 0x00, 0x00]),  # Data offset
                 # DIB header, BITMAPINFOHEADER
                 bytearray([0x28, 0x00, 0x00, 0x00]),  # DIB header size
-                # TODO: Change according to header version
-                struct.pack('<I', self._width),       # Image width
-                # TODO: Change according to header version
-                struct.pack('<I', self._height),      # Image height
+                struct.pack('<i', self._width),       # Image width
+                struct.pack('<i', self._height),      # Image height
                 bytearray([0x01, 0x00]),              # Color planes
                 bytearray([0x18, 0x00]),              # Bits per pixel
                 bytearray([0x00, 0x00, 0x00, 0x00]),  # Compression
