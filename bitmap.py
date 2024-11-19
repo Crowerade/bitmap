@@ -13,22 +13,22 @@ import struct
 class Bitmap(object):
 
     """Create a bitmap image file (.bmp).
-    
+
     Usage is simple:
     >>> from bitmap import Bitmap
     >>> bmp = Bitmap(10, 10, fill=(0, 100, 255))  # (r, g, b) background
     >>> bmp.pencil(1, 1, (128, 128, 128))
     >>> bmp.save('test.bmp')
     """
-    
+
     def __init__(self, width, height, fill=(0, 0, 0)):
         """Intialize the bitmap file."""
         self._width  = width
         self._height = height
 
         self._pixels = [
-            [fill for y in range(self._height)]
-            for x in range(self._width)
+            [fill for _ in range(self._height)]
+            for _ in range(self._width)
         ]
 
         self._row_pad   = (self._width*3) % 4
@@ -53,7 +53,8 @@ class Bitmap(object):
 
     def _write_header(self, f):
         """Write the bitmap file header."""
-        file_size = 0x36 + ((self._width + self._row_pad)*self._height*3)
+        file_size = 0x36 + ((abs(self._width) +
+                             self._row_pad)*abs(self._height)*3)
 
         map(
             f.write,
@@ -65,7 +66,9 @@ class Bitmap(object):
                 bytearray([0x36, 0x00, 0x00, 0x00]),  # Data offset
                 # DIB header, BITMAPINFOHEADER
                 bytearray([0x28, 0x00, 0x00, 0x00]),  # DIB header size
+                # TODO: Change according to header version
                 struct.pack('<I', self._width),       # Image width
+                # TODO: Change according to header version
                 struct.pack('<I', self._height),      # Image height
                 bytearray([0x01, 0x00]),              # Color planes
                 bytearray([0x18, 0x00]),              # Bits per pixel
