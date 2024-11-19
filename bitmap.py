@@ -83,7 +83,7 @@ class Bitmap(object):
 
     def _write_pixels(self, f):
         """Write the array of pixels to the file."""
-        for y in reversed(range(self._height)):
+        for y in reversed(range(abs(self._height))):
             row = [self._pixels[x][y] for x in range(self._width)]
             row = [reversed(color) for color in row]
             row = list(itertools.chain.from_iterable(row))
